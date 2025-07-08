@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertidor Amazon Afiliado</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background-color: #f5f5f5;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #333;
+    }
+    input, textarea, button {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.8rem;
+      font-size: 1rem;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      word-break: break-all;
+    }
+    .notice {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>Convertidor de enlaces Amazon Afiliado</h1>
+  <p>Pega aquí un enlace de Amazon y lo convertiremos automáticamente con tu tag de afiliado.</p>
+  <textarea id="inputLink" rows="3" placeholder="Pega aquí tu enlace de Amazon..."></textarea>
+  <button onclick="convertir()">Convertir enlace</button>
+  <div class="result" id="resultado" style="display: none;"></div>
+  <button id="copiarBtn" onclick="copiar()" style="display: none;">Copiar enlace</button>
+  <div class="notice">
+    Este convertidor usa el tag de afiliado: <strong>maxtecuenta-21</strong>.<br>
+    Gracias por apoyar el contenido.
+  </div>
+
+  <script>
+    function convertir() {
+      const input = document.getElementById("inputLink").value.trim();
+      let url;
+      try {
+        url = new URL(input);
+      } catch {
+        alert("Por favor, introduce un enlace válido de Amazon.");
+        return;
+      }
+
+      if (!url.hostname.includes("amazon.")) {
+        alert("Este enlace no parece ser de Amazon.");
+        return;
+      }
+
+      // Elimina cualquier parámetro existente de afiliado
+      url.searchParams.delete("tag");
+
+      // Añade tu tag de afiliado
+      url.searchParams.set("tag", "maxtecuenta-21");
+
+      const resultado = url.toString();
+      document.getElementById("resultado").innerText = resultado;
+      document.getElementById("resultado").style.display = "block";
+      document.getElementById("copiarBtn").style.display = "block";
+    }
+
+    function copiar() {
+      const texto = document.getElementById("resultado").innerText;
+      navigator.clipboard.writeText(texto).then(() => {
+        alert("Enlace copiado al portapapeles ✅");
+      });
+    }
+  </script>
+</body>
+</html>
+Subida inicial del convertidor Amazon
