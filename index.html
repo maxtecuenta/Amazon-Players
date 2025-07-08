@@ -5,17 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Convertidor Amazon Afiliado</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: sans-serif;
       padding: 2rem;
       background-color: #f5f5f5;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
       max-width: 600px;
-      margin: auto;
+      padding: 1rem;
+      text-align: center;
     }
     h1 {
       color: #333;
+      font-size: 1.8rem;
     }
-    input, textarea, button {
+    img.logo {
+      max-width: 120px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    textarea, button {
       width: 100%;
       margin-top: 1rem;
       padding: 0.8rem;
@@ -26,25 +43,56 @@
       padding: 1rem;
       background-color: #fff;
       border-radius: 8px;
-      word-break: break-all;
+      word-break: break-word;
+    }
+    .share-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+    .share-buttons a {
+      display: inline-block;
+      padding: 0.6rem 1rem;
+      background-color: #25D366;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .share-buttons a.telegram {
+      background-color: #0088cc;
     }
     .notice {
       font-size: 0.9rem;
       margin-top: 1rem;
       color: #777;
     }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .container {
+        padding: 1rem 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Convertidor de enlaces Amazon Afiliado</h1>
-  <p>Pega aquí un enlace de Amazon y lo convertiremos automáticamente con tu tag de afiliado.</p>
-  <textarea id="inputLink" rows="3" placeholder="Pega aquí tu enlace de Amazon..."></textarea>
-  <button onclick="convertir()">Convertir enlace</button>
-  <div class="result" id="resultado" style="display: none;"></div>
-  <button id="copiarBtn" onclick="copiar()" style="display: none;">Copiar enlace</button>
-  <div class="notice">
-    Este convertidor usa el tag de afiliado: <strong>maxtecuenta-21</strong>.<br>
-    Gracias por apoyar el contenido.
+  <div class="container">
+    <img src="Players%20Podcast%20Afiliado.png" alt="Players Podcast Logo" class="logo">
+    <h1>Convertidor de enlaces Amazon Afiliado</h1>
+    <p>Pega aquí el enlace del artículo que quieres comprar en Amazon. Lo convertiremos automáticamente en afiliado de Players Podcast.</p>
+    <textarea id="inputLink" rows="3" placeholder="Pega aquí tu enlace de Amazon..."></textarea>
+    <button onclick="convertir()">Convertir enlace</button>
+    <div class="result" id="resultado" style="display: none;"></div>
+    <button id="copiarBtn" onclick="copiar()" style="display: none;">Copiar enlace</button>
+    <div class="share-buttons" id="botonesCompartir" style="display: none;">
+      <a id="whatsapp" href="#" target="_blank">Compartir WhatsApp</a>
+      <a id="telegram" href="#" class="telegram" target="_blank">Compartir Telegram</a>
+    </div>
+    <div class="notice">
+      Estás usando un enlace afiliado para ayudar a Players Podcast. Gracias.
+    </div>
   </div>
 
   <script>
@@ -70,6 +118,10 @@
       document.getElementById("resultado").innerText = resultado;
       document.getElementById("resultado").style.display = "block";
       document.getElementById("copiarBtn").style.display = "block";
+      document.getElementById("botonesCompartir").style.display = "flex";
+
+      document.getElementById("whatsapp").href = `https://wa.me/?text=${encodeURIComponent(resultado)}`;
+      document.getElementById("telegram").href = `https://t.me/share/url?url=${encodeURIComponent(resultado)}`;
     }
 
     function copiar() {
